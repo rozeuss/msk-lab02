@@ -1,0 +1,15 @@
+<series>
+    <nThreads>3</nThreads>
+    <config>
+        <seed>2</seed>
+    </config>
+    <config>
+        <seed>1</seed>
+    </config>
+    <config>
+        <seed>3</seed>
+    </config>
+    <config>
+        <seed>2</seed>
+    </config>
+</series>
