@@ -3,6 +3,7 @@ package smo;
 import dissimlab.random.SimGenerator;
 import dissimlab.simcore.BasicSimEvent;
 import dissimlab.simcore.SimControlException;
+import dissimlab.simcore.SimManager;
 import dissimlab.simcore.SimParameters.SimDateField;
 
 /**
@@ -13,13 +14,16 @@ import dissimlab.simcore.SimParameters.SimDateField;
  */
 public class Zglaszaj extends BasicSimEvent<Otoczenie, Object>
 {
-    private SimGenerator generator;
+	private SimManager simManager;
+	private SimGenerator generator;
     private Otoczenie parent;
 
-    public Zglaszaj(Otoczenie parent, double delay) throws SimControlException
+    public Zglaszaj(Otoczenie parent, double delay, SimManager simManager) throws SimControlException
     {
-    	super(parent, delay);
-    	generator = new SimGenerator();
+		super(parent, delay);
+		this.parent = parent;
+		this.simManager = simManager;
+    	generator = new SimGenerator(parent.getSmo().getSeed());
     }
 
     public Zglaszaj(Otoczenie parent) throws SimControlException
@@ -43,7 +47,7 @@ public class Zglaszaj extends BasicSimEvent<Otoczenie, Object>
 	@Override
 	protected void stateChange() throws SimControlException {
         parent = getSimObj();
-        Zgloszenie zgl = new Zgloszenie(simTime(), parent.smo);
+        Zgloszenie zgl = new Zgloszenie(simTime(), parent.smo, this.simManager);
         parent.smo.dodaj(zgl);
         System.out.println(simTime()+" - "+simDate(SimDateField.HOUR24)+" - "+simDate(SimDateField.MINUTE)+" - "+simDate(SimDateField.SECOND)+" - "+simDate(SimDateField.MILLISECOND)+": Otoczenie- Dodano nowe zgl. nr: " + zgl.getTenNr());
         // Aktywuj obsługę, jeżeli kolejka była pusta (gniazdo "spało")

@@ -19,9 +19,6 @@ public class SimManager {
 	private double astronomicalTimeShift = SimParameters.MinSimTimeValue;
 	private double pauseStartTime = 0.0;
 	private double astronomicalTimeCorrection = 0.0;
-
-	private int numberOfThreads;
-
 	
 	private SimMode simMode = SimMode.ASAP;//ASTRONOMICAL;
 	private SimProcessStatus controlState = SimProcessStatus.IDLE;
@@ -29,7 +26,8 @@ public class SimManager {
 	private SimContext commonSimContext;  
 	private long eventsProcessed = 0;
 	
-	private static SimManager simManager = new SimManager(); // Singleton
+//	private static SimManager simManager = new SimManager(); // Singleton
+
     private static int stChngCounter = 0;
     private Dispatcher dispatcher;
     
@@ -41,19 +39,25 @@ public class SimManager {
 		stChngCounter++;
 	}
 
-	public static SimManager getInstance() {
-		if (simManager == null) {
-			simManager = new SimManager();
-		}
-		return simManager;
-	}
-	
-	public static SimManager resetInstance() {
-		simManager = null;
-		return getInstance();
-	}
+//	public static SimManager getInstance() {
+//		if (simManager == null) {
+//			simManager = new SimManager();
+//		}
+//		return simManager;
+//	}
+//
+//	public static SimManager getInstance() {
+//		if (simManager == null) {
+//			simManager = new SimManager();
+//		}
+//		return simManager;
+//	}
+//	public static SimManager resetInstance() {
+//		simManager = null;
+//		return getInstance();
+//	}
 
-	private SimManager() {
+	public SimManager() {
 		simCalendar = SimCalendar.getInstance();
 		commonSimContext = SimContext.getInstance("Common SimContext", this);
 		dispatcher = new Dispatcher();

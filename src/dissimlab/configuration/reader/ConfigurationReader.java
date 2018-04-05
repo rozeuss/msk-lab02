@@ -36,7 +36,7 @@ public class ConfigurationReader {
                 Node configNode = configNodes.item(i);
                 if (configNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) configNode;
-                    series.getConfigs().add(new Configuration(Double.valueOf(eElement.getElementsByTagName
+                    series.getConfigs().add(new Configuration(Long.valueOf(eElement.getElementsByTagName
                         (ElementType.SEED.camelCaseValue()).item(0).getTextContent())));
                 }
             }

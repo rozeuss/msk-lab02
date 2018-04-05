@@ -7,16 +7,11 @@ package smo;
 
 import java.util.LinkedList;
 
-import smo.RozpocznijObsluge;
-import smo.ZakonczObsluge;
-import smo.Zgloszenie;
 import dissimlab.broker.INotificationEvent;
 import dissimlab.broker.IPublisher;
-import dissimlab.monitors.MonitoredVar;
 import dissimlab.simcore.BasicSimObj;
-import dissimlab.simcore.SimEventSemaphore;
 import dissimlab.simcore.SimControlException;
-
+import dissimlab.simcore.SimManager;
 
 
 public class Smo extends BasicSimObj
@@ -25,12 +20,19 @@ public class Smo extends BasicSimObj
 	private boolean wolne = true;
     public RozpocznijObsluge rozpocznijObsluge;
     public ZakonczObsluge zakonczObsluge;
-	
-    /** Creates a new instance of Smo 
-     * @throws SimControlException */
-    public Smo() throws SimControlException
+    private long seed;
+
+    public long getSeed() {
+        return seed;
+    }
+
+    /** Creates a new instance of Smo
+     * @throws SimControlException
+     * @param simManager */
+    public Smo(SimManager simManager, long seed) throws SimControlException
     {
         // Utworzenie wewnętrznej listy w kolejce
+        super(simManager);
         kolejka = new LinkedList <Zgloszenie>();
     }
 

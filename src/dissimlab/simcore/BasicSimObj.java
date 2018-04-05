@@ -21,11 +21,11 @@ public abstract class BasicSimObj implements IPublisher, ISubscriber{
 	private LinkedList<BasicSimEvent<BasicSimObj, Object>> simSimEventList;
 
 	//SimObj created in the default context for the whole model
-	public BasicSimObj() {
-		this.contextRoot = SimManager.getInstance().getCommonSimContext();
+	public BasicSimObj(SimManager simManager) {
+		this.contextRoot = simManager.getCommonSimContext();
 		this.simSimEventList = new LinkedList<BasicSimEvent<BasicSimObj, Object>>();
 	}
-	
+
 	public BasicSimObj(SimContext context) {
 		this.contextRoot = context;
 		this.simSimEventList = new LinkedList<BasicSimEvent<BasicSimObj, Object>>();
@@ -138,18 +138,18 @@ public abstract class BasicSimObj implements IPublisher, ISubscriber{
 		getContextInstance().proceedPauseSimulation();
 	}
 	
-	protected void stopSimulation(double duration) throws SimControlException {
+	protected void stopSimulation(double duration, SimManager simManager) throws SimControlException {
 		if (duration >=0.0) {
 			@SuppressWarnings("unused")
-			SimControlEvent stopEvent = new SimControlEvent(duration, SimControlStatus.STOPSIMULATION, SimParameters.StopSimPriority);
+			SimControlEvent stopEvent = new SimControlEvent(duration, SimControlStatus.STOPSIMULATION, SimParameters.StopSimPriority, simManager );
 		}
 		else
 			throw new SimControlException("Time duration must not be negative");	
 	}
 
-	protected void stopSimulation() throws SimControlException {
-		stopSimulation(0.0);
-	}
+//	protected void stopSimulation() throws SimControlException {
+//		stopSimulation(0.0, );
+//	}
 
 	public double simTime() {
 		return contextRoot.simTime();

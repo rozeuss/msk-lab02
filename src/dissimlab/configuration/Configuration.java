@@ -1,17 +1,17 @@
 package dissimlab.configuration;
 
 public class Configuration {
-    private double seed;
+    private long seed;
 
-    public Configuration(double seed) {
+    public Configuration(long seed) {
         this.seed = seed;
     }
 
-    public double getSeed() {
+    public long getSeed() {
         return seed;
     }
 
-    public void setSeed(double seed) {
+    public void setSeed(long seed) {
         this.seed = seed;
     }
 

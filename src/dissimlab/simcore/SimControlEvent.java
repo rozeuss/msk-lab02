@@ -10,12 +10,12 @@ import dissimlab.simcore.SimParameters.SimControlStatus;
  */
 public class SimControlEvent extends BasicSimEvent<BasicSimObj, SimControlStatus> {
 
-	public SimControlEvent(double delay, SimControlStatus status, int priority) throws SimControlException {
-		super(delay, status, priority);
+	public SimControlEvent(double delay, SimControlStatus status, int priority, SimManager simManager) throws SimControlException {
+		super(delay, status, priority, simManager);
  	}
 
-	public SimControlEvent(double delay, SimControlStatus status) throws SimControlException {
-		super(delay, status);
+	public SimControlEvent(double delay, SimControlStatus status, SimManager simManager) throws SimControlException {
+		super(delay, status, simManager );
  	}
 
 	@Override

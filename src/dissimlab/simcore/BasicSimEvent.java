@@ -23,15 +23,15 @@ public abstract class BasicSimEvent<TSimObj extends BasicSimObj, TParams> implem
 
 	// Add immediately to common simObj in the default context for the whole model (when stateChange is very general/common to model) - without any "in" parameters 
 	// The same TO DO in the other cases
-	public BasicSimEvent() throws SimControlException {
-		this(0.0);
-	}
+//	public BasicSimEvent() throws SimControlException {
+//		this(0.0, null);
+//	}
 	
 	// Add to common simObj in the default context for the whole model (when stateChange is very general/common to model) - without any "in" parameters 
 	@SuppressWarnings("unchecked")
-	public BasicSimEvent(double delay) throws SimControlException {
+	public BasicSimEvent(double delay, SimManager simManager) throws SimControlException {
 		if (delay >=0.0) {
-			this.simObject = (TSimObj)SimManager.getInstance().getCommonSimContext().getContextsimObj();
+			this.simObject = (TSimObj)simManager.getCommonSimContext().getContextsimObj();
 			// register "entity-statechange-params" in context and model
 			if (this.simObject!= null) {
 				//possible problem with negative delay value
@@ -47,16 +47,16 @@ public abstract class BasicSimEvent<TSimObj extends BasicSimObj, TParams> implem
 			//System.err.println("Time duration must not be negative");
 	}	
 
-	// Add immediately to common simObj in the default context for the whole model (when stateChange is very general/common to model) 
-	public BasicSimEvent(TParams params) throws SimControlException {
-		this(0.0, params);
-	}
+//	// Add immediately to common simObj in the default context for the whole model (when stateChange is very general/common to model)
+//	public BasicSimEvent(TParams params) throws SimControlException {
+//		this(0.0, params, );
+//	}
 	
 	// Add to common simObj in the default context for the whole model (when stateChange is very general/common to model) 
 	@SuppressWarnings("unchecked")
-	public BasicSimEvent(double delay, TParams params) throws SimControlException {
+	public BasicSimEvent(double delay, TParams params, SimManager simManager) throws SimControlException {
 		if (delay >=0.0) {
-			this.simObject = (TSimObj)SimManager.getInstance().getCommonSimContext().getContextsimObj();
+			this.simObject = (TSimObj)simManager.getCommonSimContext().getContextsimObj();
 			this.transitionParams = params;
 			// register "entity-statechange-params" in context and model
 			if (this.simObject!= null) {
@@ -71,16 +71,16 @@ public abstract class BasicSimEvent<TSimObj extends BasicSimObj, TParams> implem
 			throw new SimControlException("Time duration must not be negative");	
 	}
 	
-	// Add to common simObj in the default context for the whole model (when stateChange is very general/common to model) 
-	public BasicSimEvent(TParams params, int priority) throws SimControlException {
-		this(0.0, params, priority);
-	}
+//	// Add to common simObj in the default context for the whole model (when stateChange is very general/common to model)
+//	public BasicSimEvent(TParams params, int priority) throws SimControlException {
+//		this(0.0, params, priority);
+//	}
 	
 	// Add to common simObj in the default context for the whole model (when stateChange is very general/common to model) 
 	@SuppressWarnings("unchecked")
-	public BasicSimEvent(double delay, TParams params, int priority) throws SimControlException {
+	public BasicSimEvent(double delay, TParams params, int priority, SimManager simManager) throws SimControlException {
 		if (delay >=0.0) {
-			this.simObject = (TSimObj)SimManager.getInstance().getCommonSimContext().getContextsimObj();
+			this.simObject = (TSimObj)simManager.getCommonSimContext().getContextsimObj();
 			this.simPriority = priority;
 			this.transitionParams = params;
 			// register "entity-statechange-params" in context and model
@@ -170,9 +170,9 @@ public abstract class BasicSimEvent<TSimObj extends BasicSimObj, TParams> implem
 	
 	// Add to common simObj in the default context for the whole model (when stateChange is very general/common to model) 
 	@SuppressWarnings("unchecked")
-	public BasicSimEvent(SimEventSemaphore barrier, TParams params) throws SimControlException {
+	public BasicSimEvent(SimEventSemaphore barrier, TParams params, SimManager simManager) throws SimControlException {
 		if (barrier != null){
-			this.simObject = (TSimObj)SimManager.getInstance().getCommonSimContext().getContextsimObj();
+			this.simObject = (TSimObj)simManager.getCommonSimContext().getContextsimObj();
 			this.transitionParams = params;
 			this.simSemaphore = barrier;
 			// register "entity-statechange-params" in context and model
@@ -221,9 +221,9 @@ public abstract class BasicSimEvent<TSimObj extends BasicSimObj, TParams> implem
 
 	// Add to common simObj in the default context for the whole model (when stateChange is very general/common to model) 
 	@SuppressWarnings("unchecked")
-	public BasicSimEvent(TParams params, double period) throws SimControlException {
+	public BasicSimEvent(TParams params, double period, SimManager simManager) throws SimControlException {
 		if (period >=0.0) {
-			this.simObject = (TSimObj)SimManager.getInstance().getCommonSimContext().getContextsimObj();
+			this.simObject = (TSimObj)simManager.getCommonSimContext().getContextsimObj();
 			this.repetitionPeriod = period;
 			this.transitionParams = params;
 			// register "entity-statechange-params" in context and model
@@ -257,9 +257,9 @@ public abstract class BasicSimEvent<TSimObj extends BasicSimObj, TParams> implem
 
 	// Add to common simObj in the default context for the whole model (when stateChange is very general/common to model) 
 	@SuppressWarnings("unchecked")
-	public BasicSimEvent(TParams params, double period, int priority) throws SimControlException {
+	public BasicSimEvent(TParams params, double period, int priority, SimManager simManager) throws SimControlException {
 		if (period >=0.0) {
-			this.simObject = (TSimObj)SimManager.getInstance().getCommonSimContext().getContextsimObj();
+			this.simObject = (TSimObj)simManager.getCommonSimContext().getContextsimObj();
 			this.repetitionPeriod = period;
 			this.simPriority = priority;
 			this.transitionParams = params;
@@ -399,19 +399,19 @@ public abstract class BasicSimEvent<TSimObj extends BasicSimObj, TParams> implem
 	//	return simObj.getDispatcher();
 	//}
 
-	protected void stopSimulation(double duration) throws SimControlException {
+	protected void stopSimulation(double duration, SimManager simManager) throws SimControlException {
 		if (duration >=0.0) {
 			@SuppressWarnings("unused")
-			SimControlEvent stopEvent = new SimControlEvent(duration, SimControlStatus.STOPSIMULATION, SimParameters.StopSimPriority);
+			SimControlEvent stopEvent = new SimControlEvent(duration, SimControlStatus.STOPSIMULATION, SimParameters.StopSimPriority, simManager );
 		}
 		else
 			throw new SimControlException("Time duration must not be negative");	
 			//System.err.println("Time duration must not be negative");
 	}
 
-	protected void stopSimulation() throws SimControlException {
-		stopSimulation(0.0);
-	}
+//	protected void stopSimulation() throws SimControlException {
+//		stopSimulation(0.0, );
+//	}
 	
 	protected Dispatcher getDispatcher() {
 		return simObject.getDispatcher();

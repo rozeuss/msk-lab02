@@ -10,16 +10,13 @@ import java.util.concurrent.Executors;
 
 public class ConcurrentSimulation {
 
-    List<SimManager> simManagers;
-
     public static void main(String[] args) {
         ConfigurationReader configurationReader = new ConfigurationReader();
         configurationReader.readConfiguration();
         Series series = configurationReader.getSeries();
         ExecutorService executor = Executors.newFixedThreadPool(series.getNumberOfThreads());
         for (int i = 0; i < series.getConfigs().size(); i++) {
-//            series.getConfigs().get(i).getSeed();
-            Runnable worker = new SimManagerWorker("" + (i + 1));
+            Runnable worker = new SimManagerWorker("" + (i + 1), series.getConfigs().get(i));
             executor.execute(worker);
         }
         executor.shutdown();

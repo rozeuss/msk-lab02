@@ -15,18 +15,18 @@ public class RozpocznijObsluge extends BasicSimEvent<Smo, Zgloszenie>
     private Smo smoParent;
     private SimGenerator generator;
 
-    public RozpocznijObsluge(Smo parent, double delay) throws SimControlException
-    {
-    	super(parent, delay);
-    	generator = new SimGenerator();
-        this.smoParent = parent;
-    }
+//    public RozpocznijObsluge(Smo parent, double delay) throws SimControlException
+//    {
+//    	super(parent, delay);
+//    	generator = new SimGenerator();
+//        this.smoParent = parent;
+//    }
 
     public RozpocznijObsluge(Smo parent) throws SimControlException
     {
     	super(parent);
-    	generator = new SimGenerator();
-        this.smoParent = parent;
+		this.smoParent = parent;
+		generator = new SimGenerator(smoParent.getSeed());
     }
     
 	@Override

@@ -1,12 +1,10 @@
 package smo;
 
-import smo.KoniecNiecierpliwienia;
-import smo.Smo;
-import smo.StartNiecierpliwienia;
 import dissimlab.broker.INotificationEvent;
 import dissimlab.broker.IPublisher;
 import dissimlab.simcore.BasicSimObj;
 import dissimlab.simcore.SimControlException;
+import dissimlab.simcore.SimManager;
 
 /**
  * Description: Klasa zgloszenia obsługiwanego w gnieździe obsługi.
@@ -24,8 +22,9 @@ public class Zgloszenie extends BasicSimObj
     public Smo smo;
     
 
-	public Zgloszenie(double Czas, Smo smo) throws SimControlException
+	public Zgloszenie(double Czas, Smo smo, SimManager simManager) throws SimControlException
     {
+        super(simManager);
         czasOdniesienia = Czas;
         setTenNr();
         this.smo = smo;

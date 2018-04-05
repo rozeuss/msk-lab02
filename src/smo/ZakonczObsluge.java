@@ -45,7 +45,7 @@ public class ZakonczObsluge extends BasicSimEvent<Smo, Zgloszenie>
       	// Zaplanuj dalsza obsługe w tym gnieździe
       	if (smoParent.liczbaZgl() > 0)
        	{
-      		smoParent.rozpocznijObsluge = new RozpocznijObsluge(smoParent);        	
+      		smoParent.rozpocznijObsluge = new RozpocznijObsluge(smoParent);
        	}	
 	}
 

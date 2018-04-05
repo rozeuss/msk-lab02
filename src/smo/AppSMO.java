@@ -13,19 +13,26 @@ import dissimlab.simcore.SimControlException;
 import dissimlab.simcore.SimManager;
 import dissimlab.simcore.SimParameters.SimControlStatus;
 
-public class AppSMO {
-    public static void main(String[] args) {
+public class AppSMO implements Runnable {
+    private long seed;
+
+    public AppSMO(long seed) {
+        this.seed = seed;
+    }
+
+    public void run() {
         try {
 
-            SimManager model = SimManager.getInstance();
+//            SimManager model = SimManager.getInstance();
+            SimManager model = new SimManager();
             // Powołanie Smo
-            Smo smo = new Smo();
+            Smo smo = new Smo(model, seed);
             // Utworzenie otoczenia
-            Otoczenie generatorZgl = new Otoczenie(smo);
+            Otoczenie generatorZgl = new Otoczenie(smo, model);
             // Dwa sposoby zaplanowanego końca symulacji
             //model.setEndSimTime(10000);
             // lub
-            SimControlEvent stopEvent = new SimControlEvent(1000.0, SimControlStatus.STOPSIMULATION);
+            SimControlEvent stopEvent = new SimControlEvent(1000.0, SimControlStatus.STOPSIMULATION, model);
             // Uruchomienie symulacji za pośrednictwem metody "startSimulation"
             model.startSimulation();
 
